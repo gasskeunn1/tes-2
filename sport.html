@@ -202,11 +202,11 @@
 
     const iframe = document.getElementById("videoPlayer");
     const standbyVideo = document.getElementById("videoStandby");
-    standbyVideo.src = "https://www.w3schools.com/html/mov_bbb.mp4";
+    standbyVideo.src = "assets/standby-video.mp4";
 
     // Reload otomatis preview tiap 60 detik
     setInterval(() => {
-      standbyVideo.src = "https://www.w3schools.com/html/mov_bbb.mp4";
+      standbyVideo.src = "assets/standby-video.mp4";
     }, 60000);
 
     fetch("data/iframes.json")
