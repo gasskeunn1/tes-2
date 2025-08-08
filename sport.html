@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GameOnX - CH SPORT</title>
   <style>
     body {
@@ -68,10 +68,66 @@
       width: 100%;
     }
 
-    iframe {
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 10px;
+    }
+
+    #video-container {
       width: 100%;
-      height: 90vh;
+      max-width: 960px;
+      margin: 0 auto 20px;
+      aspect-ratio: 16 / 9;
+      background: black;
+      overflow: hidden;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    video, iframe {
+      width: 100%;
+      height: 100%;
       border: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .channels {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .channel-card {
+      background: #1a1a2e;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .channel-card:hover {
+      transform: scale(1.03);
+    }
+
+    .channel-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .channel-info {
+      padding: 10px;
+      text-align: center;
+    }
+
+    .channel-info h4 {
+      margin: 5px 0;
+      font-size: 16px;
+      color: #00bfff;
     }
 
     @media (max-width: 768px) {
@@ -110,13 +166,68 @@
     </nav>
   </header>
 
-  <iframe src="https://example.com/sportchannel" allowfullscreen></iframe>
+  <div class="container">
+    <div id="video-container">
+      <video id="videoStandby" autoplay muted loop playsinline>
+        <source src="assets/standby-video.mp4" type="video/mp4">
+        Browser Anda tidak mendukung video.
+      </video>
+      <iframe id="videoPlayer" style="display:none;" allowfullscreen></iframe>
+    </div>
+
+    <div class="channels" id="channelList">
+      <!-- Kartu channel akan dibuat otomatis via JS -->
+    </div>
+  </div>
 
   <script>
     function toggleMenu() {
-      const nav = document.getElementById('nav-menu');
-      nav.classList.toggle('show');
+      document.getElementById('nav-menu').classList.toggle('show');
     }
+
+    const channels = [
+      {
+        name: "RCTI",
+        poster: "https://via.placeholder.com/300x170.png?text=RCTI",
+        src: "https://rcti-stream.example.com"
+      },
+      {
+        name: "SCTV",
+        poster: "https://via.placeholder.com/300x170.png?text=SCTV",
+        src: "https://sctv-stream.example.com"
+      },
+      {
+        name: "TRANS TV",
+        poster: "https://via.placeholder.com/300x170.png?text=TRANS+TV",
+        src: "https://transtv-stream.example.com"
+      },
+      {
+        name: "NET TV",
+        poster: "https://via.placeholder.com/300x170.png?text=NET+TV",
+        src: "https://nettv-stream.example.com"
+      }
+    ];
+
+    const container = document.getElementById('channelList');
+    const iframe = document.getElementById('videoPlayer');
+    const standby = document.getElementById('videoStandby');
+
+    channels.forEach(channel => {
+      const card = document.createElement('div');
+      card.className = 'channel-card';
+      card.innerHTML = `
+        <img src="${channel.poster}" alt="${channel.name}">
+        <div class="channel-info">
+          <h4>${channel.name}</h4>
+        </div>
+      `;
+      card.addEventListener('click', () => {
+        iframe.src = channel.src;
+        iframe.style.display = 'block';
+        standby.style.display = 'none';
+      });
+      container.appendChild(card);
+    });
   </script>
 </body>
 </html>
