@@ -2,31 +2,31 @@
   {
     "name": "Italy - Poland | Pool C",
     "poster": "https://cdn.jwplayer.com/v2/media/GOTctDs1/poster.jpg?width=1920",
-    "start": "2025-08-08T20:05:00+07:00",
+    "start": "2025-08-09T10:00:00+07:00",
     "src": "https://livecdn.euw1-0005.jwplive.com/live/sites/fM9jRrkn/media/GOTctDs1/live.isml/.m3u8"
   },
   {
     "name": "Argentina - Serbia | Pool A",
     "poster": "https://cdn.jwplayer.com/v2/media/7OegvrL6/poster.jpg?width=1920",
-    "start": "2025-08-08T22:30:00+07:00",
+    "start": "2025-08-09T10:00:00+07:00",
     "src": "https://livecdn.euw1-0005.jwplive.com/live/sites/fM9jRrkn/media/7OegvrL6/live.isml/.m3u8"
   },
   {
     "name": "China - Dominican Republic | Pool B",
     "poster": "https://cdn.jwplayer.com/v2/media/1WUYNz6V/poster.jpg?width=1920",
-    "start": "2025-08-09T18:00:00+07:00",
+    "start": "2025-08-09T10:00:00+07:00",
     "src": "https://livecdn.euw1-0005.jwplive.com/live/sites/fM9jRrkn/media/1WUYNz6V/live.isml/.m3u8"
   },
   {
     "name": "USA - Mexico | Pool B",
     "poster": "https://cdn.jwplayer.com/v2/media/0XW09PrN/poster.jpg?width=1920",
-    "start": "2025-08-09T20:15:00+07:00",
+    "start": "2025-08-09T13:00:00+07:00",
     "src": "https://livecdn.euw1-0005.jwplive.com/live/sites/fM9jRrkn/media/0XW09PrN/live.isml/.m3u8"
   },
   {
     "name": "Turkiye - Egypt | Pool C",
     "poster": "https://cdn.jwplayer.com/v2/media/sMXigBOe/poster.jpg?width=1920",
-    "start": "2025-08-09T22:40:00+07:00",
+    "start": "2025-08-09T13:00:00+07:00",
     "src": "https://livecdn.euw1-0005.jwplive.com/live/sites/fM9jRrkn/media/sMXigBOe/live.isml/.m3u8"
   }
 ]
