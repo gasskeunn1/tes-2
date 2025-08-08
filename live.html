@@ -116,6 +116,11 @@
       font-size: 13px;
       color: #ccc;
       text-align: left;
+      margin-top: auto;
+      min-height: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
     }
     .live-label {
       color: #0f0;
@@ -205,12 +210,6 @@
       lastBuffered = currentBuffered;
     }, 10000);
 
-    // Format waktu sesuai zona lokal
-    function formatLocalTime(isoString) {
-      const date = new Date(isoString);
-      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-
     fetch('data/live.json')
       .then(response => response.json())
       .then(channels => {
@@ -225,18 +224,17 @@
 
           const startTime = new Date(ch.start);
           const isLive = now >= startTime;
-          const formattedTime = formatLocalTime(ch.start);
 
           card.innerHTML = `
             <img src="${ch.poster}" alt="poster">
             <div class="card-title">${ch.title}</div>
             <div class="card-time">
-              ${isLive ? '<span class="live-label">🔴 LIVE</span> ' : ''}
+              ${isLive ? '<span class="live-label">🔴 LIVE</span><br>' : ''}
               ${startTime.toLocaleString("id-ID", {
                 weekday: "short",
                 hour: "2-digit",
                 minute: "2-digit",
-                day: "numeric",
+                day: "2-digit",
                 month: "short",
                 timeZoneName: "short"
               })}
