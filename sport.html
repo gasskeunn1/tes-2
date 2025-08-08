@@ -97,7 +97,6 @@
 
     #videoStandby {
       display: block;
-      object-fit: cover;
     }
 
     .channels {
@@ -132,13 +131,13 @@
 
     .channel-card img {
       width: 100%;
-      height: 100%;
+      height: calc(100% - 20px);
       object-fit: cover;
       border-radius: 8px;
     }
 
     .channel-card h6 {
-      margin-top: 4px;
+      margin: 0;
       font-size: 11px;
       text-align: center;
       color: rgba(255, 255, 255, 0.85);
@@ -147,7 +146,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       position: absolute;
-      bottom: 4px;
+      bottom: 3px;
       left: 0;
     }
 
@@ -193,9 +192,7 @@
       <iframe id="videoPlayer" src="" allowfullscreen style="display: none;"></iframe>
     </div>
 
-    <div class="channels" id="channelList">
-      <!-- Kartu channel dari JSON -->
-    </div>
+    <div class="channels" id="channelList"></div>
   </div>
 
   <script>
@@ -209,8 +206,7 @@
 
     // Reload otomatis preview tiap 60 detik
     setInterval(() => {
-      const currentTime = standbyVideo.currentTime;
-      standbyVideo.src = standbyVideo.src;
+      standbyVideo.src = "assets/standby-video.mp4";
     }, 60000);
 
     fetch("data/iframes.json")
