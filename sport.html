@@ -115,11 +115,14 @@
       cursor: pointer;
       transition: transform 0.2s ease, border 0.2s ease;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      width: 180px;
+      width: 160px;
       aspect-ratio: 16 / 10;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      overflow: hidden;
     }
 
     .channel-card:hover {
@@ -143,6 +146,9 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      position: absolute;
+      bottom: 4px;
+      left: 0;
     }
 
     @media (max-width: 768px) {
