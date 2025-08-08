@@ -72,7 +72,6 @@
       max-width: 1200px;
       margin: 20px auto;
       padding: 0 10px;
-      text-align: center;
     }
 
     #video-container {
@@ -100,10 +99,21 @@
       overflow: hidden;
       padding: 5px;
       border: 2px solid #333;
-      text-align: left;
       display: flex;
       flex-direction: column;
       height: 100%;
+    }
+
+    .card a {
+      text-decoration: none;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card a:hover {
+      color: #00bfff;
     }
 
     .card img {
@@ -116,28 +126,21 @@
     .card-title {
       margin: 8px 0 5px;
       font-weight: bold;
-      color: white;
       font-size: 14px;
       flex-grow: 1;
+      text-align: left;
     }
 
     .card-time {
       font-size: 13px;
       color: #ccc;
       margin-top: auto;
+      text-align: left;
     }
 
     .live-label {
       color: #0f0;
       font-weight: bold;
-    }
-
-    .card a {
-      color: inherit;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
     }
 
     @media (max-width: 1024px) {
@@ -206,7 +209,7 @@
     // ⏯️ HLS.js Player + Auto Reload
     const video = document.getElementById('hls-video');
     const hls = new Hls();
-    const streamUrl = 'https://example.com/live.m3u8'; // Ganti dengan link aslimu
+    const streamUrl = 'https://example.com/live.m3u8'; // Ganti dengan link asli
 
     let lastBuffered = 0;
 
@@ -218,7 +221,6 @@
 
     hls.loadSource(streamUrl);
     hls.attachMedia(video);
-
     video.addEventListener('loadedmetadata', () => video.play());
 
     setInterval(() => {
@@ -241,7 +243,7 @@
     const channels = [
       {
         title: "Mexico - Croatia | Pool B | Womens' U21 World Champs 2025",
-        start: "2025-08-08T20:00:00+07:00",
+        start: "2025-08-08T20:05:00+07:00",
         poster: "https://cdn.jwplayer.com/v2/media/NQaVQGVU/poster.jpg?width=320",
         link: "#"
       },
@@ -271,6 +273,9 @@
       }
     ];
 
+    // Urutkan berdasarkan waktu
+    channels.sort((a, b) => new Date(a.start) - new Date(b.start));
+
     const now = new Date();
     const list = document.getElementById("channel-list");
 
@@ -292,7 +297,7 @@
           <img src="${ch.poster}" alt="poster">
           <div class="card-title">${ch.title}</div>
           <div class="card-time">
-            ${isLive ? '<span class="live-label">LIVE</span>' : `${localTime} ${zona}`}
+            ${isLive ? '<span class="live-label">🔴 LIVE</span>' : `${localTime} ${zona}`}
           </div>
         </a>
       `;
