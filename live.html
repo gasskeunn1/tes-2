@@ -232,6 +232,14 @@
             <div class="card-title">${ch.name}</div>
             <div class="card-time">
               ${isLive ? '<span class="live-label">🔴 LIVE</span> ' : ''}${formattedTime}
+              ${startTime.toLocaleString("id-ID", {
+                weekday: "short",
+                hour: "2-digit",
+                minute: "2-digit",
+                day: "numeric",
+                month: "short",
+                timeZoneName: "short"
+              })}
             </div>
           `;
 
