@@ -168,9 +168,9 @@
     <img src="assets/gameonx logo 3.png" class="logo" />
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     <nav id="nav-menu">
-      <a href="live.html">LIVE</a>
-      <a href="sport.html">CH SPORT</a>
-      <a href="campur.html">CH CAMPUR</a>
+      <a href="live.html">Home</a>
+      <a href="sport.html">Grup</a>
+      <a href="campur.html">Sawer</a>
     </nav>
   </header>
 
@@ -232,12 +232,13 @@
               ${isLive ? '<span class="live-label">🔴 LIVE</span><br>' : ''}
               ${startTime.toLocaleString("id-ID", {
                 weekday: "short",
+                day: "numeric",
+                month: "short",
+                year: "numeric",  
                 hour: "2-digit",
                 minute: "2-digit",
-                day: "2-digit",
-                month: "short",
                 timeZoneName: "short"
-              })}
+              })
             </div>
           `;
 
