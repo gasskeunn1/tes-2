@@ -107,16 +107,14 @@
       border-radius: 4px;
     }
     .card-title {
-      margin: 8px 0 5px;
+      margin: 8px 0 4px;
       font-weight: bold;
       font-size: 14px;
-      flex-grow: 1;
       text-align: left;
     }
     .card-time {
       font-size: 13px;
       color: #ccc;
-      margin-top: auto;
       text-align: left;
     }
     .live-label {
@@ -195,6 +193,7 @@
       hls.attachMedia(video);
     }
 
+    // Auto-reload jika buffer macet
     let lastBuffered = 0;
     setInterval(() => {
       if (video.readyState < 2 || video.buffered.length === 0) return;
@@ -205,6 +204,12 @@
       }
       lastBuffered = currentBuffered;
     }, 10000);
+
+    // Format waktu sesuai zona lokal
+    function formatLocalTime(isoString) {
+      const date = new Date(isoString);
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
 
     fetch('data/live.json')
       .then(response => response.json())
@@ -220,12 +225,13 @@
 
           const startTime = new Date(ch.start);
           const isLive = now >= startTime;
+          const formattedTime = formatLocalTime(ch.start);
 
           card.innerHTML = `
             <img src="${ch.poster}" alt="poster">
-            <div class="card-title">${ch.title}</div>
-            <div class="card-start">
-              ${isLive ? '<span class="live-label">🔴 LIVE</span>' : ''}
+            <div class="card-title">${ch.name}</div>
+            <div class="card-time">
+              ${isLive ? '<span class="live-label">🔴 LIVE</span> ' : ''}${formattedTime}
             </div>
           `;
 
