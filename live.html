@@ -90,7 +90,7 @@
 
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(5, 1fr);
       gap: 15px;
     }
 
@@ -99,8 +99,11 @@
       border-radius: 8px;
       overflow: hidden;
       padding: 5px;
-      text-align: center;
       border: 2px solid #333;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     .card img {
@@ -112,29 +115,41 @@
 
     .card-title {
       margin: 8px 0 5px;
-    }
-
-    .card-title a {
-      color: #00f;
       font-weight: bold;
+      color: white;
       font-size: 14px;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .card-title a:hover {
-      text-decoration: underline;
+      flex-grow: 1;
     }
 
     .card-time {
       font-size: 13px;
       color: #ccc;
-      margin-bottom: 5px;
+      margin-top: auto;
     }
 
     .live-label {
       color: #0f0;
       font-weight: bold;
+    }
+
+    .card a {
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    @media (max-width: 1024px) {
+      .card-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (max-width: 768px) {
@@ -188,12 +203,10 @@
       nav.classList.toggle('show');
     }
 
-    // =============================
     // ⏯️ HLS.js Player + Auto Reload
-    // =============================
     const video = document.getElementById('hls-video');
     const hls = new Hls();
-    const streamUrl = 'https://example.com/live.m3u8'; // Ganti URL aslinya
+    const streamUrl = 'https://example.com/live.m3u8'; // Ganti dengan link aslimu
 
     let lastBuffered = 0;
 
@@ -218,46 +231,42 @@
       lastBuffered = currentBuffered;
     }, 10000);
 
-    // =============================
     // 🕐 Zona Waktu Otomatis
-    // =============================
     const timezoneOffset = new Date().getTimezoneOffset(); // Dalam menit
     let zona = 'WIB';
     if (timezoneOffset === -480) zona = 'WITA';
     else if (timezoneOffset === -540) zona = 'WIT';
 
-    // =============================
-    // 🗂️ Data Kartu Channel Langsung
-    // =============================
+    // 🗂️ Data Kartu Channel
     const channels = [
       {
         title: "Mexico - Croatia | Pool B | Womens' U21 World Champs 2025",
         start: "2025-08-08T20:00:00+07:00",
-        poster: "https://i.ibb.co/0mKY8kr/mexico-croatia.jpg",
+        poster: "https://cdn.jwplayer.com/v2/media/NQaVQGVU/poster.jpg?width=320",
         link: "#"
       },
       {
         title: "Egypt - Czechia | Pool C | Womens' U21 World Champs 2025",
         start: "2025-08-08T20:00:00+07:00",
-        poster: "https://i.ibb.co/1G5Yzjz/egypt-czechia.jpg",
+        poster: "https://cdn.jwplayer.com/v2/media/NQaVQGVU/poster.jpg?width=320",
         link: "#"
       },
       {
         title: "Brazil - Chile | Pool D | Womens' U21 World Champs 2025",
         start: "2025-08-08T20:00:00+07:00",
-        poster: "https://i.ibb.co/9WH1NKF/brazil-chile.jpg",
+        poster: "https://cdn.jwplayer.com/v2/media/NQaVQGVU/poster.jpg?width=320",
         link: "#"
       },
       {
         title: "Indonesia - Canada | Pool A | Womens' U21 World Champs 2025",
         start: "2025-08-08T20:00:00+07:00",
-        poster: "https://i.ibb.co/tDpczGz/indonesia-canada.jpg",
+        poster: "https://cdn.jwplayer.com/v2/media/NQaVQGVU/poster.jpg?width=320",
         link: "#"
       },
       {
         title: "Italy - Poland | Pool C | Womens' U21 World Champs 2025",
         start: "2025-08-09T10:00:00+07:00",
-        poster: "https://i.ibb.co/X83Mwkm/italy-poland.jpg",
+        poster: "https://cdn.jwplayer.com/v2/media/NQaVQGVU/poster.jpg?width=320",
         link: "#"
       }
     ];
@@ -279,13 +288,13 @@
       const isLive = now >= startTime;
 
       card.innerHTML = `
-        <img src="${ch.poster}" alt="poster">
-        <div class="card-title">
-          <a href="${ch.link}" target="_blank">${ch.title}</a>
-        </div>
-        <div class="card-time">
-          ${isLive ? '<span class="live-label">LIVE</span>' : `${localTime} ${zona}`}
-        </div>
+        <a href="${ch.link}" target="_blank">
+          <img src="${ch.poster}" alt="poster">
+          <div class="card-title">${ch.title}</div>
+          <div class="card-time">
+            ${isLive ? '<span class="live-label">LIVE</span>' : `${localTime} ${zona}`}
+          </div>
+        </a>
       `;
 
       list.appendChild(card);
