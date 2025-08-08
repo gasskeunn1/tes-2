@@ -85,7 +85,8 @@
       position: relative;
     }
 
-    video, iframe {
+    #video-container iframe,
+    #videoStandby {
       width: 100%;
       height: 100%;
       border: none;
@@ -94,40 +95,55 @@
       left: 0;
     }
 
+    #videoStandby {
+      background: url('assets/poster-standby.jpg') center center no-repeat;
+      background-size: cover;
+      display: block;
+    }
+
     .channels {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 15px;
+      justify-content: center;
       margin-top: 20px;
     }
 
     .channel-card {
-      background: #1a1a2e;
+      background: #161b22;
       border-radius: 10px;
-      overflow: hidden;
+      padding: 5px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, border 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 180px;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .channel-card:hover {
-      transform: scale(1.03);
+      transform: scale(1.05);
+      border: 1px solid white;
     }
 
     .channel-card img {
       width: 100%;
-      height: auto;
-      display: block;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
     }
 
-    .channel-info {
-      padding: 10px;
+    .channel-card h6 {
+      margin-top: 5px;
+      font-size: 10px;
       text-align: center;
-    }
-
-    .channel-info h4 {
-      margin: 5px 0;
-      font-size: 16px;
-      color: #00bfff;
+      color: rgba(255, 255, 255, 0.8);
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     @media (max-width: 768px) {
@@ -168,15 +184,12 @@
 
   <div class="container">
     <div id="video-container">
-      <video id="videoStandby" autoplay muted loop playsinline>
-        <source src="assets/standby-video.mp4" type="video/mp4">
-        Browser Anda tidak mendukung video.
-      </video>
-      <iframe id="videoPlayer" style="display:none;" allowfullscreen></iframe>
+      <div id="videoStandby"></div>
+      <iframe id="videoPlayer" src="" allowfullscreen style="display: none;"></iframe>
     </div>
 
     <div class="channels" id="channelList">
-      <!-- Kartu channel akan dibuat otomatis via JS -->
+      <!-- Kartu channel dari JSON -->
     </div>
   </div>
 
@@ -185,49 +198,38 @@
       document.getElementById('nav-menu').classList.toggle('show');
     }
 
-    const channels = [
-      {
-        name: "RCTI",
-        poster: "https://via.placeholder.com/300x170.png?text=RCTI",
-        src: "https://rcti-stream.example.com"
-      },
-      {
-        name: "SCTV",
-        poster: "https://via.placeholder.com/300x170.png?text=SCTV",
-        src: "https://sctv-stream.example.com"
-      },
-      {
-        name: "TRANS TV",
-        poster: "https://via.placeholder.com/300x170.png?text=TRANS+TV",
-        src: "https://transtv-stream.example.com"
-      },
-      {
-        name: "NET TV",
-        poster: "https://via.placeholder.com/300x170.png?text=NET+TV",
-        src: "https://nettv-stream.example.com"
-      }
-    ];
+    const iframe = document.getElementById("videoPlayer");
+    const standby = document.getElementById("videoStandby");
 
-    const container = document.getElementById('channelList');
-    const iframe = document.getElementById('videoPlayer');
-    const standby = document.getElementById('videoStandby');
+    fetch("data/iframes.json")
+      .then(res => res.json())
+      .then(channels => {
+        const container = document.getElementById("channelList");
 
-    channels.forEach(channel => {
-      const card = document.createElement('div');
-      card.className = 'channel-card';
-      card.innerHTML = `
-        <img src="${channel.poster}" alt="${channel.name}">
-        <div class="channel-info">
-          <h4>${channel.name}</h4>
-        </div>
-      `;
-      card.addEventListener('click', () => {
-        iframe.src = channel.src;
-        iframe.style.display = 'block';
-        standby.style.display = 'none';
+        channels.forEach(channel => {
+          let src = channel.src.startsWith("//") ? "https:" + channel.src : channel.src;
+
+          const card = document.createElement("div");
+          card.className = "channel-card";
+          card.innerHTML = `
+            <img src="${channel.poster}" alt="${channel.name}" />
+            <h6>${channel.name}</h6>
+          `;
+
+          card.addEventListener("click", () => {
+            iframe.src = src;
+            iframe.style.display = "block";
+            standby.style.display = "none";
+          });
+
+          container.appendChild(card);
+        });
+      })
+      .catch(error => {
+        document.getElementById("channelList").innerHTML =
+          `<div class='text-red-500 text-center'>❌ Gagal memuat channel.</div>`;
+        console.error(error);
       });
-      container.appendChild(card);
-    });
   </script>
 </body>
 </html>
