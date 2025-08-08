@@ -74,72 +74,46 @@
       padding: 0 10px;
     }
 
-    #video-container {
-      width: 100%;
-      max-width: 960px;
-      margin: 0 auto 20px;
-      aspect-ratio: 16 / 9;
-      background: black;
-      overflow: hidden;
-      border-radius: 10px;
-      position: relative;
-    }
-
-    #video-container iframe,
-    #videoStandby {
-      width: 100%;
-      height: 100%;
-      border: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    #videoStandby {
-      background: url('assets/poster-standby.jpg') center center no-repeat;
-      background-size: cover;
-      display: block;
-    }
-
     .channels {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
       margin-top: 20px;
+      justify-items: center;
     }
 
     .channel-card {
       background: #161b22;
       border-radius: 10px;
-      padding: 5px;
+      padding: 4px;
       cursor: pointer;
-      transition: transform 0.2s ease, border 0.2s ease;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      width: 180px;
-      aspect-ratio: 16 / 9;
+      transition: transform 0.2s ease, border-color 0.2s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
+      max-width: 180px;
+      aspect-ratio: 16 / 9;
     }
 
     .channel-card:hover {
       transform: scale(1.05);
-      border: 1px solid white;
+      border-color: #ffffff;
     }
 
     .channel-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 6px;
     }
 
     .channel-card h6 {
-      margin-top: 5px;
-      font-size: 10px;
+      margin-top: 4px;
+      font-size: 11px;
       text-align: center;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.85);
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
@@ -183,23 +157,15 @@
   </header>
 
   <div class="container">
-    <div id="video-container">
-      <div id="videoStandby"></div>
-      <iframe id="videoPlayer" src="" allowfullscreen style="display: none;"></iframe>
-    </div>
-
     <div class="channels" id="channelList">
-      <!-- Kartu channel dari JSON -->
+      <!-- Channel cards akan muncul di sini -->
     </div>
   </div>
 
   <script>
     function toggleMenu() {
-      document.getElementById('nav-menu').classList.toggle('show');
+      document.getElementById("nav-menu").classList.toggle("show");
     }
-
-    const iframe = document.getElementById("videoPlayer");
-    const standby = document.getElementById("videoStandby");
 
     fetch("data/iframes.json")
       .then(res => res.json())
@@ -207,7 +173,8 @@
         const container = document.getElementById("channelList");
 
         channels.forEach(channel => {
-          let src = channel.src.startsWith("//") ? "https:" + channel.src : channel.src;
+          // Ubah src jika pakai // jadi https://
+          const src = channel.src.startsWith("//") ? "https:" + channel.src : channel.src;
 
           const card = document.createElement("div");
           card.className = "channel-card";
@@ -215,19 +182,16 @@
             <img src="${channel.poster}" alt="${channel.name}" />
             <h6>${channel.name}</h6>
           `;
-
-          card.addEventListener("click", () => {
-            iframe.src = src;
-            iframe.style.display = "block";
-            standby.style.display = "none";
-          });
-
+          card.onclick = () => {
+            window.location.href = `channel.html?src=${encodeURIComponent(src)}&title=${encodeURIComponent(channel.name)}`;
+          };
           container.appendChild(card);
         });
       })
       .catch(error => {
-        document.getElementById("channelList").innerHTML =
-          `<div class='text-red-500 text-center'>❌ Gagal memuat channel.</div>`;
+        document.getElementById("channelList").innerHTML = `
+          <div style="text-align:center; color:red;">❌ Gagal memuat channel.</div>
+        `;
         console.error(error);
       });
   </script>
