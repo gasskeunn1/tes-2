@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GameOnX - Live</title>
-  <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+  <title>GameOnX - Live Streaming</title>
   <style>
     body {
       background: #0d0d1a;
@@ -70,9 +69,72 @@
     }
 
     .container {
-      max-width: 960px;
-      margin: 30px auto;
+      max-width: 1200px;
+      margin: 20px auto;
       padding: 0 10px;
+      text-align: center;
+    }
+
+    #video-container {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto 30px;
+      aspect-ratio: 16/9;
+      background: black;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      background: #1a1a2e;
+      border-radius: 8px;
+      overflow: hidden;
+      padding: 5px;
+      text-align: center;
+      border: 2px solid #333;
+    }
+
+    .card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .card-title {
+      margin: 8px 0 5px;
+    }
+
+    .card-title a {
+      color: #00f;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .card-title a:hover {
+      text-decoration: underline;
+    }
+
+    .card-time {
+      font-size: 13px;
+      color: #ccc;
+      margin-bottom: 5px;
+    }
+
+    .live-label {
+      color: #0f0;
+      font-weight: bold;
     }
 
     @media (max-width: 768px) {
@@ -112,21 +174,122 @@
   </header>
 
   <div class="container">
-    <video id="hls-video" class="video-js vjs-default-skin" controls autoplay width="100%" height="auto"></video>
+    <div id="video-container">
+      <video id="hls-video" controls></video>
+    </div>
+
+    <div id="channel-list" class="card-grid"></div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/video.js@8.10.0/dist/video.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
-    const player = videojs('hls-video');
-    player.src({
-      src: 'https://example.com/stream.m3u8', // Ganti dengan URL .m3u8 kamu
-      type: 'application/x-mpegURL'
-    });
-
     function toggleMenu() {
       const nav = document.getElementById('nav-menu');
       nav.classList.toggle('show');
     }
+
+    // =============================
+    // ⏯️ HLS.js Player + Auto Reload
+    // =============================
+    const video = document.getElementById('hls-video');
+    const hls = new Hls();
+    const streamUrl = 'https://example.com/live.m3u8'; // Ganti URL aslinya
+
+    let lastBuffered = 0;
+
+    function reloadStream() {
+      hls.detachMedia();
+      hls.loadSource(streamUrl);
+      hls.attachMedia(video);
+    }
+
+    hls.loadSource(streamUrl);
+    hls.attachMedia(video);
+
+    video.addEventListener('loadedmetadata', () => video.play());
+
+    setInterval(() => {
+      if (video.readyState < 2 || video.buffered.length === 0) return;
+      const currentBuffered = video.buffered.end(0);
+      if (currentBuffered === lastBuffered) {
+        console.warn("Stream macet, reload player...");
+        reloadStream();
+      }
+      lastBuffered = currentBuffered;
+    }, 10000);
+
+    // =============================
+    // 🕐 Zona Waktu Otomatis
+    // =============================
+    const timezoneOffset = new Date().getTimezoneOffset(); // Dalam menit
+    let zona = 'WIB';
+    if (timezoneOffset === -480) zona = 'WITA';
+    else if (timezoneOffset === -540) zona = 'WIT';
+
+    // =============================
+    // 🗂️ Data Kartu Channel Langsung
+    // =============================
+    const channels = [
+      {
+        title: "Mexico - Croatia | Pool B | Womens' U21 World Champs 2025",
+        start: "2025-08-08T20:00:00+07:00",
+        poster: "https://i.ibb.co/0mKY8kr/mexico-croatia.jpg",
+        link: "#"
+      },
+      {
+        title: "Egypt - Czechia | Pool C | Womens' U21 World Champs 2025",
+        start: "2025-08-08T20:00:00+07:00",
+        poster: "https://i.ibb.co/1G5Yzjz/egypt-czechia.jpg",
+        link: "#"
+      },
+      {
+        title: "Brazil - Chile | Pool D | Womens' U21 World Champs 2025",
+        start: "2025-08-08T20:00:00+07:00",
+        poster: "https://i.ibb.co/9WH1NKF/brazil-chile.jpg",
+        link: "#"
+      },
+      {
+        title: "Indonesia - Canada | Pool A | Womens' U21 World Champs 2025",
+        start: "2025-08-08T20:00:00+07:00",
+        poster: "https://i.ibb.co/tDpczGz/indonesia-canada.jpg",
+        link: "#"
+      },
+      {
+        title: "Italy - Poland | Pool C | Womens' U21 World Champs 2025",
+        start: "2025-08-09T10:00:00+07:00",
+        poster: "https://i.ibb.co/X83Mwkm/italy-poland.jpg",
+        link: "#"
+      }
+    ];
+
+    const now = new Date();
+    const list = document.getElementById("channel-list");
+
+    channels.forEach(ch => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const startTime = new Date(ch.start);
+      const localTime = startTime.toLocaleString("id-ID", {
+        weekday: 'short', day: '2-digit', month: '2-digit',
+        hour: '2-digit', minute: '2-digit',
+        timeZone: 'Asia/Jakarta'
+      });
+
+      const isLive = now >= startTime;
+
+      card.innerHTML = `
+        <img src="${ch.poster}" alt="poster">
+        <div class="card-title">
+          <a href="${ch.link}" target="_blank">${ch.title}</a>
+        </div>
+        <div class="card-time">
+          ${isLive ? '<span class="live-label">LIVE</span>' : `${localTime} ${zona}`}
+        </div>
+      `;
+
+      list.appendChild(card);
+    });
   </script>
 </body>
 </html>
