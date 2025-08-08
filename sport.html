@@ -10,6 +10,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       color: white;
+      padding-top: 60px; /* Tambahan untuk menghindari tertutup header */
     }
 
     header {
@@ -19,6 +20,11 @@
       align-items: center;
       padding: 10px 20px;
       flex-wrap: wrap;
+      position: fixed; /* Header tetap di atas */
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
     }
 
     .logo {
