@@ -10,7 +10,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       color: white;
-      padding-top: 60px; /* Tambahan untuk menghindari tertutup header */
+      padding-top: 60px; /* supaya konten tidak ketutup header */
     }
 
     header {
@@ -18,17 +18,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
-      flex-wrap: wrap;
-      position: fixed; /* Header tetap di atas */
+      padding: 5px 40px; /* kiri-kanan lebih lega */
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 999;
+      height: 60px; /* tinggi konsisten */
     }
 
     .logo {
-      height: 40px;
+      height: 35px; /* ukuran logo seragam */
     }
 
     .menu-toggle {
@@ -42,7 +42,8 @@
 
     nav {
       display: flex;
-      gap: 20px;
+      gap: 25px; /* jarak antar menu */
+      align-items: center;
     }
 
     nav a {
@@ -50,7 +51,7 @@
       color: #00bfff;
       text-decoration: none;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 15px;
       transition: color 0.3s ease;
     }
 
