@@ -14,11 +14,16 @@
     }
 
     header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       background: rgba(17, 17, 17, 0.95);
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 20px;
+      z-index: 1000;
     }
 
     .logo {
@@ -69,7 +74,7 @@
     }
 
     main {
-      padding: 60px 20px;
+      padding: 80px 20px 20px 20px; /* top padding untuk header tetap */
       text-align: center;
     }
 
