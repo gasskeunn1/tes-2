@@ -2,16 +2,13 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GameOnX - Home</title>
-  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="header-placeholder"></div>
 
-  <!-- Header -->
-  <div id="header-container"></div>
-
-  <!-- Konten Halaman -->
   <main>
     <h1>Selamat Datang di GameOnX</h1>
     <div class="card"><a href="live.html">🔴 Tonton Live Streaming</a></div>
@@ -19,18 +16,24 @@
     <div class="card"><a href="campur.html">📺 Channel TV Campuran</a></div>
   </main>
 
-  <!-- Footer + QR Code -->
-  <div id="footer-container"></div>
+  <div id="qr-placeholder"></div>
+  <div id="footer-placeholder"></div>
 
-  <!-- Script untuk load header & footer -->
   <script>
-    async function loadComponent(id, file) {
-      const response = await fetch(file);
-      const html = await response.text();
-      document.getElementById(id).innerHTML = html;
+    // Muat header, QR code, dan footer dari file terpisah
+    fetch('header.html').then(res => res.text()).then(data => {
+      document.getElementById('header-placeholder').innerHTML = data;
+    });
+    fetch('qr.html').then(res => res.text()).then(data => {
+      document.getElementById('qr-placeholder').innerHTML = data;
+    });
+    fetch('footer.html').then(res => res.text()).then(data => {
+      document.getElementById('footer-placeholder').innerHTML = data;
+    });
+
+    function toggleMenu() {
+      document.getElementById('nav-menu').classList.toggle('show');
     }
-    loadComponent('header-container', 'assets/header.html');
-    loadComponent('footer-container', 'assets/footer.html');
   </script>
 </body>
 </html>
