@@ -1,18 +1,22 @@
-
-body {
-  background-color: black;
-  color: white;
-  font-family: Arial, sans-serif;
+/* style.css */
+body, html {
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  background: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
-  background: rgba(17, 17, 17, 0.95);
+  background: rgba(17, 17, 17, 0.9);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  flex-shrink: 0;
 }
 
 .logo {
@@ -25,29 +29,111 @@ nav {
 }
 
 nav a {
+  position: relative;
   color: #00bfff;
   text-decoration: none;
   font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 2px;
+  background-color: #00bfff;
+  transition: width 0.3s ease;
 }
 
 nav a:hover {
-  color: white;
+  color: #ffffff;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #00bfff;
+  cursor: pointer;
 }
 
 main {
-  padding: 20px;
+  flex-grow: 1;
+  padding: 60px 20px 40px;
   text-align: center;
+}
+
+.card {
+  background: rgba(26, 26, 46, 0.85);
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.6);
+}
+
+.card a {
+  color: #00bfff;
+  font-size: 20px;
+  text-decoration: none;
+  display: block;
 }
 
 .qr-container {
+  margin: 0 auto 10px;
   text-align: center;
-  margin-top: 30px;
+}
+
+.qr-container img {
+  width: 120px;
+  height: 120px;
 }
 
 footer {
-  background: rgba(17, 17, 17, 0.95);
-  padding: 10px;
+  background: #111;
   text-align: center;
+  padding: 10px;
   font-size: 14px;
   color: #bbb;
+  border-top: 1px solid #222;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgba(17, 17, 17, 0.9);
+    padding-top: 10px;
+  }
+
+  nav a {
+    padding: 10px 0;
+    text-align: center;
+    border-top: 1px solid #222;
+  }
+
+  nav.show {
+    display: flex;
+  }
 }
