@@ -13,31 +13,29 @@
       padding: 0;
     }
 
-    /* Posisi logo di kiri atas */
-    .logo {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      height: 50px;
-      z-index: 100;
+    header {
+      background: rgba(17, 17, 17, 0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
     }
 
-    /* Menu di kanan atas */
+    .logo {
+      height: 40px;
+    }
+
     nav {
-      position: fixed;
-      top: 20px;
-      right: 20px;
       display: flex;
       gap: 20px;
-      z-index: 100;
     }
 
     nav a {
+      position: relative;
       color: #00bfff;
       text-decoration: none;
       font-weight: bold;
       font-size: 16px;
-      position: relative;
       transition: color 0.3s ease;
     }
 
@@ -54,14 +52,13 @@
     }
 
     nav a:hover {
-      color: white;
+      color: #ffffff;
     }
 
     nav a:hover::after {
       width: 100%;
     }
 
-    /* Tombol menu untuk mobile */
     .menu-toggle {
       display: none;
       font-size: 24px;
@@ -69,14 +66,10 @@
       border: none;
       color: #00bfff;
       cursor: pointer;
-      position: fixed;
-      top: 15px;
-      right: 20px;
-      z-index: 101;
     }
 
     main {
-      padding: 100px 20px 40px;
+      padding: 60px 20px;
       text-align: center;
     }
 
@@ -108,6 +101,24 @@
       display: block;
     }
 
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #111;
+      margin-top: 40px;
+    }
+
+    .qr-container {
+      margin: 20px auto;
+      max-width: 200px;
+    }
+
+    .qr-container img {
+      width: 100%;
+      border: 4px solid #00bfff;
+      border-radius: 10px;
+    }
+
     @media (max-width: 768px) {
       .menu-toggle {
         display: block;
@@ -116,16 +127,13 @@
       nav {
         display: none;
         flex-direction: column;
+        width: 100%;
         background-color: rgba(17, 17, 17, 0.95);
-        position: fixed;
-        top: 60px;
-        right: 20px;
-        padding: 10px;
-        border-radius: 10px;
+        padding-top: 10px;
       }
 
       nav a {
-        padding: 10px;
+        padding: 10px 0;
         text-align: center;
         border-top: 1px solid #222;
       }
@@ -137,21 +145,30 @@
   </style>
 </head>
 <body>
-  <img src="assets/gameonx logo 3.png" class="logo" />
-
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-  <nav id="nav-menu">
-    <a href="live.html">LIVE</a>
-    <a href="sport.html">CH SPORT</a>
-    <a href="campur.html">CH CAMPUR</a>
-  </nav>
+  <header>
+    <img src="assets/gameonx logo 3.png" class="logo" />
+    <nav id="nav-menu">
+      <a href="live.html">LIVE</a>
+      <a href="sport.html">CH SPORT</a>
+      <a href="campur.html">CH CAMPUR</a>
+    </nav>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
 
   <main>
     <h1>Selamat Datang di GameOnX</h1>
     <div class="card"><a href="live.html">🔴 Tonton Live Streaming</a></div>
     <div class="card"><a href="sport.html">⚽ Channel TV Olahraga</a></div>
     <div class="card"><a href="campur.html">📺 Channel TV Campuran</a></div>
+
+    <div class="qr-container">
+      <img src="assets/qrcode.png" alt="QR Code GameOnX" />
+    </div>
   </main>
+
+  <footer>
+    &copy; 2025 GameOnX. Semua Hak Dilindungi.
+  </footer>
 
   <script>
     function toggleMenu() {
