@@ -1,0 +1,53 @@
+
+body {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: rgba(17, 17, 17, 0.95);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.logo {
+  height: 40px;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  color: #00bfff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: white;
+}
+
+main {
+  padding: 20px;
+  text-align: center;
+}
+
+.qr-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+footer {
+  background: rgba(17, 17, 17, 0.95);
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #bbb;
+}
