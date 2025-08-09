@@ -4,148 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GameOnX - Home</title>
-  <style>
-    body {
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Posisi logo di kiri atas */
-    .logo {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      height: 50px;
-      z-index: 100;
-    }
-
-    /* Menu di kanan atas */
-    nav {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      gap: 20px;
-      z-index: 100;
-    }
-
-    nav a {
-      color: #00bfff;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      position: relative;
-      transition: color 0.3s ease;
-    }
-
-    nav a::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: -5px;
-      transform: translateX(-50%);
-      width: 0%;
-      height: 2px;
-      background-color: #00bfff;
-      transition: width 0.3s ease;
-    }
-
-    nav a:hover {
-      color: white;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    /* Tombol menu untuk mobile */
-    .menu-toggle {
-      display: none;
-      font-size: 24px;
-      background: none;
-      border: none;
-      color: #00bfff;
-      cursor: pointer;
-      position: fixed;
-      top: 15px;
-      right: 20px;
-      z-index: 101;
-    }
-
-    main {
-      padding: 100px 20px 40px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 28px;
-      margin-bottom: 30px;
-      text-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
-    }
-
-    .card {
-      background: rgba(26, 26, 46, 0.85);
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 400px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 25px rgba(0, 191, 255, 0.6);
-    }
-
-    .card a {
-      color: #00bfff;
-      font-size: 20px;
-      text-decoration: none;
-      display: block;
-    }
-
-    @media (max-width: 768px) {
-      .menu-toggle {
-        display: block;
-      }
-
-      nav {
-        display: none;
-        flex-direction: column;
-        background-color: rgba(17, 17, 17, 0.95);
-        position: fixed;
-        top: 60px;
-        right: 20px;
-        padding: 10px;
-        border-radius: 10px;
-      }
-
-      nav a {
-        padding: 10px;
-        text-align: center;
-        border-top: 1px solid #222;
-      }
-
-      nav.show {
-        display: flex;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
-  <img src="assets/gameonx logo 3.png" class="logo" />
 
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-  <nav id="nav-menu">
-    <a href="live.html">LIVE</a>
-    <a href="sport.html">CH SPORT</a>
-    <a href="campur.html">CH CAMPUR</a>
-  </nav>
+  <!-- Header -->
+  <div id="header-container"></div>
 
+  <!-- Konten Halaman -->
   <main>
     <h1>Selamat Datang di GameOnX</h1>
     <div class="card"><a href="live.html">🔴 Tonton Live Streaming</a></div>
@@ -153,10 +19,18 @@
     <div class="card"><a href="campur.html">📺 Channel TV Campuran</a></div>
   </main>
 
+  <!-- Footer + QR Code -->
+  <div id="footer-container"></div>
+
+  <!-- Script untuk load header & footer -->
   <script>
-    function toggleMenu() {
-      document.getElementById('nav-menu').classList.toggle('show');
+    async function loadComponent(id, file) {
+      const response = await fetch(file);
+      const html = await response.text();
+      document.getElementById(id).innerHTML = html;
     }
+    loadComponent('header-container', 'assets/header.html');
+    loadComponent('footer-container', 'assets/footer.html');
   </script>
 </body>
 </html>
