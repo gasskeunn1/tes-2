@@ -6,46 +6,38 @@
   <title>GameOnX - Home</title>
   <style>
     body {
-      background: #0d0d1a;
+      background: black;
       color: white;
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
     }
 
-    header {
-      background: #111;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      flex-wrap: wrap;
-    }
-
+    /* Posisi logo di kiri atas */
     .logo {
-      height: 40px;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      height: 50px;
+      z-index: 100;
     }
 
-    .menu-toggle {
-      display: none;
-      font-size: 24px;
-      background: none;
-      border: none;
-      color: #00bfff;
-      cursor: pointer;
-    }
-
+    /* Menu di kanan atas */
     nav {
+      position: fixed;
+      top: 20px;
+      right: 20px;
       display: flex;
       gap: 20px;
+      z-index: 100;
     }
 
     nav a {
-      position: relative;
       color: #00bfff;
       text-decoration: none;
       font-weight: bold;
       font-size: 16px;
+      position: relative;
       transition: color 0.3s ease;
     }
 
@@ -62,30 +54,58 @@
     }
 
     nav a:hover {
-      color: #ffffff;
+      color: white;
     }
 
     nav a:hover::after {
       width: 100%;
     }
 
+    /* Tombol menu untuk mobile */
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+      background: none;
+      border: none;
+      color: #00bfff;
+      cursor: pointer;
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 101;
+    }
+
     main {
-      padding: 60px 20px;
+      padding: 100px 20px 40px;
       text-align: center;
     }
 
+    h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
+    }
+
     .card {
-      background: #1a1a2e;
+      background: rgba(26, 26, 46, 0.85);
       margin: 20px auto;
       padding: 20px;
       max-width: 400px;
       border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(0, 191, 255, 0.6);
     }
 
     .card a {
       color: #00bfff;
       font-size: 20px;
       text-decoration: none;
+      display: block;
     }
 
     @media (max-width: 768px) {
@@ -96,13 +116,16 @@
       nav {
         display: none;
         flex-direction: column;
-        width: 100%;
-        background-color: #111;
-        padding-top: 10px;
+        background-color: rgba(17, 17, 17, 0.95);
+        position: fixed;
+        top: 60px;
+        right: 20px;
+        padding: 10px;
+        border-radius: 10px;
       }
 
       nav a {
-        padding: 10px 0;
+        padding: 10px;
         text-align: center;
         border-top: 1px solid #222;
       }
@@ -114,15 +137,14 @@
   </style>
 </head>
 <body>
-  <header>
-    <img src="assets/gameonx logo 3.png" class="logo" />
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-    <nav id="nav-menu">
-      <a href="live.html">LIVE</a>
-      <a href="sport.html">CH SPORT</a>
-      <a href="campur.html">CH CAMPUR</a>
-    </nav>
-  </header>
+  <img src="assets/gameonx logo 3.png" class="logo" />
+
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <nav id="nav-menu">
+    <a href="live.html">LIVE</a>
+    <a href="sport.html">CH SPORT</a>
+    <a href="campur.html">CH CAMPUR</a>
+  </nav>
 
   <main>
     <h1>Selamat Datang di GameOnX</h1>
@@ -133,8 +155,7 @@
 
   <script>
     function toggleMenu() {
-      const nav = document.getElementById('nav-menu');
-      nav.classList.toggle('show');
+      document.getElementById('nav-menu').classList.toggle('show');
     }
   </script>
 </body>
