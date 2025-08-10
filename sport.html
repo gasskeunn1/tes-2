@@ -3,49 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GameOnX - CH SPORT</title>
+  <title>GameOnX - Live Streaming</title>
   <style>
     body {
-      background: #0d0d1a;
-      margin: 0;
-      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #0a0a14, #0d0d1a);
       color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-bottom: 50px;
     }
-
     header {
-      background: #111;
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(6px);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
-      position: relative;
+      padding: 6px 16px;
+      flex-wrap: wrap;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
-
     .logo {
-      height: 40px;
+      height: 35px;
     }
-
-    .menu-right {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
     .menu-toggle {
+      display: none;
       font-size: 24px;
       background: none;
       border: none;
       color: #00bfff;
       cursor: pointer;
-      display: none;
+      margin-left: 8px;
     }
-
     nav {
       display: flex;
       gap: 20px;
-      align-items: center;
     }
-
     nav a {
       position: relative;
       color: #00bfff;
@@ -54,7 +51,6 @@
       font-size: 16px;
       transition: color 0.3s ease;
     }
-
     nav a::after {
       content: "";
       position: absolute;
@@ -66,198 +62,258 @@
       background-color: #00bfff;
       transition: width 0.3s ease;
     }
-
     nav a:hover {
       color: #ffffff;
     }
-
     nav a:hover::after {
       width: 100%;
     }
-
-    /* Glassmorphism menu untuk mobile */
-    @media (max-width: 768px) {
-      .menu-toggle {
-        display: block;
-      }
-
-      nav {
-        display: none;
-        position: absolute;
-        top: 60px;
-        right: 10px;
-        flex-direction: column;
-        min-width: 160px;
-        border-radius: 10px;
-        padding: 10px;
-        background: rgba(17, 17, 17, 0.4);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        z-index: 999;
-      }
-
-      nav a {
-        padding: 10px;
-        text-align: center;
-        width: 100%;
-        border-radius: 6px;
-      }
-
-      nav a:hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      nav.show {
-        display: flex;
-      }
-    }
-
     .container {
       max-width: 1200px;
-      margin: 20px auto;
+      margin: 80px auto 20px;
       padding: 0 10px;
     }
-
     #video-container {
       width: 100%;
       max-width: 960px;
-      margin: 0 auto 20px;
+      margin: 0 auto 10px;
       aspect-ratio: 16 / 9;
       background: black;
       overflow: hidden;
       border-radius: 10px;
       position: relative;
     }
-
-    #video-container iframe,
-    #videoStandby {
+    video {
       width: 100%;
       height: 100%;
-      border: none;
+      object-fit: contain;
+    }
+    .section-title {
+      margin: 15px 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: #00bfff;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title::after {
+      content: "";
       position: absolute;
-      top: 0;
       left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00bfff, transparent);
+      background-size: 200% 100%;
+      animation: underline-move 2s linear infinite;
     }
-
-    .channels {
-      display: flex;
-      flex-wrap: wrap;
+    @keyframes underline-move {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
       gap: 15px;
-      justify-content: center;
-      margin-top: 20px;
     }
-
-    .channel-card {
-      background: #161b22;
-      border-radius: 10px;
+    .card {
+      background: #1a1a2e;
+      border-radius: 8px;
+      overflow: hidden;
       padding: 5px;
+      border: 2px solid #333;
       cursor: pointer;
-      transition: transform 0.2s ease, border 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      width: 160px;
-      aspect-ratio: 16 / 10;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      position: relative;
-      overflow: hidden;
+      height: auto;
+      transition: transform 0.2s ease;
     }
-
-    .channel-card:hover {
-      transform: scale(1.05);
-      border: 1px solid white;
+    .card:hover {
+      transform: scale(1.03);
+      border-color: #00bfff;
     }
-
-    .channel-card img {
+    .card img {
       width: 100%;
-      height: calc(100% - 20px);
+      height: 120px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 4px;
     }
-
-    .channel-card h6 {
-      margin: 0;
-      font-size: 11px;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.85);
-      width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      position: absolute;
-      bottom: 3px;
+    .card-title {
+      margin: 8px 0 4px;
+      font-weight: bold;
+      font-size: 14px;
+      text-align: left;
+    }
+    .card-time {
+      font-size: 13px;
+      color: #ccc;
+      text-align: left;
+      margin-top: auto;
+      min-height: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .live-label {
+      color: red;
+      font-weight: bold;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    footer {
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: white;
+      padding: 10px 16px;
+      position: fixed;
+      bottom: 0;
       left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 14px;
+      z-index: 1000;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+    }
+    @media (max-width: 1024px) {
+      .card-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      footer {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
+    }
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+      nav {
+        display: none;
+        flex-direction: column;
+        background-color: rgba(17, 17, 17, 0.95);
+        position: fixed;
+        top: 55px;
+        right: 10px;
+        padding: 10px;
+        border-radius: 10px;
+      }
+      nav a {
+        padding: 10px 0;
+        text-align: center;
+        border-top: 1px solid #222;
+      }
+      nav.show {
+        display: flex;
+      }
+      header {
+        flex-wrap: nowrap;
+      }
     }
   </style>
 </head>
 <body>
   <header>
     <img src="assets/gameonx logo 3.png" class="logo" />
-    <div class="menu-right">
-      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-      <nav id="nav-menu">
-        <a href="index.html">Home</a>
-        <a href="https://chat.whatsapp.com/FtSOKILls4HBAlnjEE5Del">Grup</a>
-        <a href="https://sociabuzz.com/fiqaz/donate">Donate</a>
-      </nav>
-    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <nav id="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="https://chat.whatsapp.com/FtSOKILls4HBAlnjEE5Del">Grup</a>
+      <a href="https://sociabuzz.com/fiqaz/donate">Donate</a>
+    </nav>
   </header>
 
   <div class="container">
     <div id="video-container">
-      <video id="videoStandby" autoplay muted loop playsinline src="assets/standby-video.mp4"></video>
-      <iframe id="videoPlayer" src="" allowfullscreen style="display: none;"></iframe>
+      <video id="hls-video" controls autoplay></video>
     </div>
 
-    <div class="channels" id="channelList"></div>
+    <h2 class="section-title">Channel TV</h2>
+
+    <div id="channel-list" class="card-grid"></div>
   </div>
 
+  <footer>
+    &copy; 2025 GameOnX - Semua Hak Dilindungi
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
     function toggleMenu() {
       document.getElementById('nav-menu').classList.toggle('show');
     }
 
-    const iframe = document.getElementById("videoPlayer");
-    const standbyVideo = document.getElementById("videoStandby");
+    const video = document.getElementById('hls-video');
+    const hls = new Hls();
+    let streamUrl = '';
 
-    // Reload otomatis preview tiap 60 detik
+    function playStream(url) {
+      streamUrl = url;
+      hls.detachMedia();
+      hls.loadSource(url);
+      hls.attachMedia(video);
+    }
+
+    let lastBuffered = 0;
     setInterval(() => {
-      standbyVideo.src = "assets/standby-video.mp4";
-    }, 60000);
+      if (video.readyState < 2 || video.buffered.length === 0) return;
+      const currentBuffered = video.buffered.end(0);
+      if (currentBuffered === lastBuffered) {
+        console.warn("Stream macet, reload player...");
+        playStream(streamUrl);
+      }
+      lastBuffered = currentBuffered;
+    }, 10000);
 
-    fetch("data/iframes.json")
-      .then(res => res.json())
+    fetch('data/live.json')
+      .then(response => response.json())
       .then(channels => {
-        const container = document.getElementById("channelList");
+        const list = document.getElementById("channel-list");
+        const now = new Date();
 
-        channels.forEach(channel => {
-          let src = channel.src.startsWith("//") ? "https:" + channel.src : channel.src;
+        channels.sort((a, b) => new Date(a.start) - new Date(b.start));
 
+        channels.forEach(ch => {
           const card = document.createElement("div");
-          card.className = "channel-card";
+          card.className = "card";
+
+          const startTime = new Date(ch.start);
+          const isLive = now >= startTime;
+
           card.innerHTML = `
-            <img src="${channel.poster}" alt="${channel.name}" />
-            <h6>${channel.name}</h6>
+            <img src="${ch.poster}" alt="poster">
+            <div class="card-title">${ch.title}</div>
+            <div class="card-time">
+              ${isLive 
+                ? '<span class="live-label">🔴 LIVE</span>' 
+                : startTime.toLocaleString("id-ID", {
+                    weekday: "short",
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",  
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    timeZoneName: "short"
+                  })
+              }
+            </div>
           `;
 
-          card.addEventListener("click", () => {
-            iframe.src = src;
-            iframe.style.display = "block";
-            standbyVideo.style.display = "none";
+          card.onclick = () => {
+            playStream(ch.src);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          };
 
-            document.getElementById("video-container").scrollIntoView({
-              behavior: "smooth"
-            });
-          });
-
-          container.appendChild(card);
+          list.appendChild(card);
         });
-      })
-      .catch(error => {
-        document.getElementById("channelList").innerHTML =
-          `<div style="color:red;text-align:center;">❌ Gagal memuat channel.</div>`;
-        console.error(error);
       });
   </script>
 </body>
