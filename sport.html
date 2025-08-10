@@ -10,7 +10,7 @@
       color: white;
       font-family: Arial, sans-serif;
       margin: 0;
-      padding-bottom: 50px; /* supaya konten tidak ketutupan footer */
+      padding-bottom: 50px;
     }
 
     header {
@@ -317,7 +317,9 @@
             iframe.src = src;
             iframe.style.display = "block";
             standbyVideo.style.display = "none";
-
+            
+          document.getElementById("video-container").scrollIntoView({
+            behavior: "smooth"
 
             });
           });
