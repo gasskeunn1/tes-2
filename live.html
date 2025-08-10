@@ -6,21 +6,29 @@
   <title>GameOnX - Live Streaming</title>
   <style>
     body {
-      background: #0d0d1a;
+      background: linear-gradient(to bottom, #0a0a14, #0d0d1a);
       color: white;
       font-family: Arial, sans-serif;
       margin: 0;
+      padding-bottom: 60px;
     }
     header {
-      background: #111;
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(6px);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
+      padding: 6px 16px;
       flex-wrap: wrap;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
     .logo {
-      height: 40px;
+      height: 35px;
     }
     .menu-toggle {
       display: none;
@@ -29,6 +37,7 @@
       border: none;
       color: #00bfff;
       cursor: pointer;
+      margin-left: 8px;
     }
     nav {
       display: flex;
@@ -61,7 +70,7 @@
     }
     .container {
       max-width: 1200px;
-      margin: 20px auto;
+      margin: 80px auto 20px;
       padding: 0 10px;
     }
     #video-container {
@@ -85,7 +94,7 @@
       font-weight: bold;
       color: #00bfff;
       position: relative;
-      display: inline-block; /* supaya garis hanya sepanjang teks */
+      display: inline-block;
     }
     .section-title::after {
       content: "";
@@ -125,7 +134,7 @@
     }
     .card img {
       width: 100%;
-      height: 120px; /* lebih pendek dari sebelumnya */
+      height: 120px;
       object-fit: cover;
       border-radius: 4px;
     }
@@ -154,6 +163,21 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
+    footer {
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: white;
+      padding: 10px 16px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 14px;
+      z-index: 1000;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+    }
     @media (max-width: 1024px) {
       .card-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -163,6 +187,10 @@
       .card-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+      footer {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
     }
     @media (max-width: 768px) {
       .menu-toggle {
@@ -171,9 +199,12 @@
       nav {
         display: none;
         flex-direction: column;
-        width: 100%;
-        background-color: #111;
-        padding-top: 10px;
+        background-color: rgba(17, 17, 17, 0.95);
+        position: fixed;
+        top: 55px;
+        right: 10px;
+        padding: 10px;
+        border-radius: 10px;
       }
       nav a {
         padding: 10px 0;
@@ -182,6 +213,9 @@
       }
       nav.show {
         display: flex;
+      }
+      header {
+        flex-wrap: nowrap;
       }
     }
   </style>
@@ -203,9 +237,12 @@
     </div>
 
     <h2 class="section-title">Jadwal Live</h2>
-
     <div id="channel-list" class="card-grid"></div>
   </div>
+
+  <footer>
+    &copy; 2025 GameOnX - Semua Hak Dilindungi
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
@@ -224,7 +261,6 @@
       hls.attachMedia(video);
     }
 
-    // Auto-reload jika buffer macet
     let lastBuffered = 0;
     setInterval(() => {
       if (video.readyState < 2 || video.buffered.length === 0) return;
