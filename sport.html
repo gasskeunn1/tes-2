@@ -10,7 +10,7 @@
       color: white;
       font-family: Arial, sans-serif;
       margin: 0;
-      padding-bottom: 50px; /* supaya konten tidak ketutupan footer */
+      padding-bottom: 50px; 
     }
 
     header {
@@ -83,7 +83,6 @@
       width: 100%;
     }
 
-    /* Glassmorphism menu untuk mobile */
     @media (max-width: 768px) {
       .menu-toggle {
         display: block;
@@ -292,19 +291,19 @@
     const iframe = document.getElementById("videoPlayer");
     const standbyVideo = document.getElementById("videoStandby");
 
-    // Fungsi untuk play standby video dengan penanganan error autoplay
+
     function playStandby() {
       standbyVideo.play().catch(e => {
         console.warn("Autoplay standby video gagal:", e);
       });
     }
 
-    // Putar standby video saat halaman siap
+
     window.addEventListener('load', () => {
       playStandby();
     });
 
-    // Reload src standby video setiap 60 detik dan putar ulang
+  
     setInterval(() => {
       standbyVideo.src = "assets/standby.mp4";
       standbyVideo.load();
