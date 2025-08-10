@@ -233,6 +233,7 @@
     footer {
       background: rgba(17, 17, 17, 0.85);
       backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       color: white;
       padding: 10px 16px;
       position: fixed;
@@ -291,21 +292,24 @@
     const iframe = document.getElementById("videoPlayer");
     const standbyVideo = document.getElementById("videoStandby");
 
-    // Fungsi play video standby, agar benar-benar auto play tiap reload src
-    function playStandbyVideo() {
-      standbyVideo.src = "assets/standby-video.mp4";
+    // Fungsi untuk play standby video dengan penanganan error autoplay
+    function playStandby() {
       standbyVideo.play().catch(e => {
-        console.warn("Auto play standby video gagal:", e);
+        console.warn("Autoplay standby video gagal:", e);
       });
     }
 
-    // Set interval 60 detik reload dan auto play video standby
-    setInterval(() => {
-      playStandbyVideo();
-    }, 60000);
+    // Putar standby video saat halaman siap
+    window.addEventListener('load', () => {
+      playStandby();
+    });
 
-    // Panggil sekali saat awal load
-    playStandbyVideo();
+    // Reload src standby video setiap 60 detik dan putar ulang
+    setInterval(() => {
+      standbyVideo.src = "assets/standby-video.mp4";
+      standbyVideo.load();
+      playStandby();
+    }, 60000);
 
     fetch("data/iframes.json")
       .then(res => res.json())
