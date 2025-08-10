@@ -6,28 +6,34 @@
   <title>GameOnX - Home</title>
   <style>
     html, body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background: black;
+      background: linear-gradient(180deg, #000000, #111111, #000000);
       color: white;
       font-family: Arial, sans-serif;
     }
 
     header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: rgba(17, 17, 17, 0.95);
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(6px);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
+      padding: 6px 16px; /* Header lebih pendek */
+      flex-wrap: wrap;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
 
     .logo {
-      height: 40px;
+      height: 35px;
     }
 
     nav {
@@ -40,7 +46,7 @@
       color: #00bfff;
       text-decoration: none;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 15px;
       transition: color 0.3s ease;
     }
 
@@ -75,7 +81,7 @@
 
     main {
       flex-grow: 1;
-      padding: 80px 20px 20px;
+      padding: 65px 20px 20px; /* Sesuai tinggi header */
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -83,16 +89,15 @@
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 26px;
       margin-bottom: 30px;
       text-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
     }
 
     .card {
       background: rgba(26, 26, 46, 0.85);
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 400px;
+      margin: 15px auto;
+      padding: 15px;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -107,7 +112,7 @@
 
     .card a {
       color: #00bfff;
-      font-size: 20px;
+      font-size: 18px;
       text-decoration: none;
       display: block;
     }
@@ -125,13 +130,31 @@
     }
 
     footer {
-      background: #111;
-      padding: 20px;
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: white;
+      padding: 10px 16px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       text-align: center;
-      margin-top: auto; 
+      font-size: 14px;
+      z-index: 1000;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
     }
+    body {
+      padding-bottom: 50px; /* supaya konten tidak ketutupan footer */
+    }
+    @media (max-width: 640px) {
+      footer {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+    
 
-
+    /* MOBILE RESPONSIVE */
     @media (max-width: 768px) {
       .menu-toggle {
         display: block;
@@ -141,9 +164,9 @@
         display: none;
         flex-direction: column;
         background-color: rgba(17, 17, 17, 0.95);
-        position: fixed;
-        top: 60px;
-        right: 2px;
+        position: absolute;
+        top: 100%; /* Tepat di bawah header */
+        right: 10px;
         padding: 10px;
         border-radius: 10px;
       }
@@ -159,7 +182,7 @@
       }
 
       header {
-        flex-wrap: wrap; 
+        flex-wrap: nowrap;
       }
     }
   </style>
@@ -168,17 +191,18 @@
   <header>
     <img src="assets/gameonx logo 3.png" class="logo" />
     <nav id="nav-menu">
-      <a href="https://chat.whatsapp.com/FtSOKILls4HBAlnjEE5Del">Grup</a>
-      <a href="https://sociabuzz.com/fiqaz/donate">Donate</a>
+
+      <a href="sport.html">Grup</a>
+      <a href="campur.html">Donate</a>
     </nav>
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <h1>Selamat Datang di GameOnX</h1>
-    <div class="card"><a href="live.html">🔴 Live Streaming Volly</a></div>
+    <h1>Selamat Datang di GameOnX TV</h1>
+    <div class="card"><a href="live.html">🔴 Live Streaming</a></div>
     <div class="card"><a href="sport.html">⚽ Channel TV Olahraga</a></div>
-    <div class="card"><a href="campur.html">📺 Channel TV</a></div>
+    <div class="card"><a href="campur.html">📺 Channel TV </a></div>
 
     <div class="qr-container">
       <img src="assets/qrcode.png" alt="QR Code GameOnX" />
@@ -186,13 +210,12 @@
   </main>
 
   <footer>
-    &copy; 2025 GameOnX. Semua Hak Dilindungi. foster
+    &copy; 2025 GameOnX. Semua Hak Dilindungi.
   </footer>
 
   <script>
     function toggleMenu() {
-      const nav = document.getElementById('nav-menu');
-      nav.classList.toggle('show');
+      document.getElementById('nav-menu').classList.toggle('show');
     }
   </script>
 </body>
