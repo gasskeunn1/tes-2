@@ -10,7 +10,7 @@
       color: white;
       font-family: Arial, sans-serif;
       margin: 0;
-      padding-bottom: 50px; 
+      padding-bottom: 50px; /* supaya konten tidak ketutupan footer */
     }
 
     header {
@@ -83,6 +83,7 @@
       width: 100%;
     }
 
+    /* Glassmorphism menu untuk mobile */
     @media (max-width: 768px) {
       .menu-toggle {
         display: block;
@@ -232,7 +233,6 @@
     footer {
       background: rgba(17, 17, 17, 0.85);
       backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
       color: white;
       padding: 10px 16px;
       position: fixed;
@@ -268,7 +268,7 @@
 
   <div class="container">
     <div id="video-container">
-      <video id="videoStandby" autoplay muted loop playsinline src="assets/standby-video.mp4"></video>
+      <video id="videoStandby" autoplay muted loop playsinline src="assets/standby.mp4"></video>
       <iframe id="videoPlayer" src="" allowfullscreen style="display: none;"></iframe>
     </div>
 
@@ -291,24 +291,12 @@
     const iframe = document.getElementById("videoPlayer");
     const standbyVideo = document.getElementById("videoStandby");
 
-
-    function playStandby() {
+    // Play standby video saat halaman siap
+    window.addEventListener('load', () => {
       standbyVideo.play().catch(e => {
         console.warn("Autoplay standby video gagal:", e);
       });
-    }
-
-
-    window.addEventListener('load', () => {
-      playStandby();
     });
-
-  
-    setInterval(() => {
-      standbyVideo.src = "assets/standby.mp4";
-      standbyVideo.load();
-      playStandby();
-    }, 60000);
 
     fetch("data/iframes.json")
       .then(res => res.json())
