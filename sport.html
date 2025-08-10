@@ -123,7 +123,7 @@
     .container {
       max-width: 1200px;
       margin: 20px auto;
-      padding: 60px 10px 0 10px;;
+      padding: 60px 10px 0 10px;
     }
 
     #video-container {
@@ -291,7 +291,6 @@
     const iframe = document.getElementById("videoPlayer");
     const standbyVideo = document.getElementById("videoStandby");
 
-
     window.addEventListener('load', () => {
       standbyVideo.play().catch(e => {
         console.warn("Autoplay standby video gagal:", e);
@@ -317,11 +316,13 @@
             iframe.src = src;
             iframe.style.display = "block";
             standbyVideo.style.display = "none";
-            
-          document.getElementById("video-container").scrollIntoView({
-            behavior: "smooth"
 
-            });
+            const header = document.querySelector('header');
+            const headerHeight = header.offsetHeight;
+            const videoContainer = document.getElementById("video-container");
+            const y = videoContainer.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+            window.scrollTo({ top: y, behavior: "smooth" });
           });
 
           container.appendChild(card);
