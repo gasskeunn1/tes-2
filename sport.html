@@ -319,7 +319,7 @@
             const header = document.querySelector('header');
             const headerHeight = header.offsetHeight;
             const videoContainer = document.getElementById("video-container");
-            const gap = 20; // jarak 20px di bawah header
+            const gap = 60; // jarak 20px di bawah header
             const y = videoContainer.getBoundingClientRect().top + window.pageYOffset - headerHeight - gap;
 
             window.scrollTo({ top: y, behavior: "smooth" });
