@@ -83,7 +83,7 @@
       width: 100%;
     }
 
-    /* Glassmorphism menu untuk mobile */
+
     @media (max-width: 768px) {
       .menu-toggle {
         display: block;
@@ -291,7 +291,7 @@
     const iframe = document.getElementById("videoPlayer");
     const standbyVideo = document.getElementById("videoStandby");
 
-    // Play standby video saat halaman siap
+
     window.addEventListener('load', () => {
       standbyVideo.play().catch(e => {
         console.warn("Autoplay standby video gagal:", e);
