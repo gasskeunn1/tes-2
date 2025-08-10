@@ -6,22 +6,27 @@
   <title>GameOnX - CH SPORT</title>
   <style>
     body {
-      background: linear-gradient(to bottom, #0a0a14, #1a1a2e);
-      margin: 0;
-      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #0a0a14, #0d0d1a);
       color: white;
-      padding-bottom: 50px; /* agar konten tidak ketutupan footer */
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-bottom: 50px; /* supaya konten tidak ketutupan footer */
     }
 
     header {
       background: rgba(17, 17, 17, 0.85);
       backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 6px 20px;
-      position: relative;
+      padding: 6px 16px;
+      flex-wrap: wrap;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
 
     .logo {
