@@ -83,10 +83,18 @@
       border-radius: 10px;
       position: relative;
     }
-    video {
+    video, #hls-video {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: black;
+      border-radius: 10px;
+    }
+    #hls-video {
+      display: none; 
     }
     .section-title {
       margin: 15px 0;
@@ -233,7 +241,9 @@
 
   <div class="container">
     <div id="video-container">
-      <video id="hls-video" controls autoplay></video>
+      <video id="standby-video" autoplay muted loop playsinline src="assets/standby.mp4"></video>
+
+      <video id="hls-video" controls></video>
     </div>
 
     <h2 class="section-title">Jadwal Live</h2>
@@ -250,17 +260,23 @@
       document.getElementById('nav-menu').classList.toggle('show');
     }
 
+    const standbyVideo = document.getElementById('standby-video');
     const video = document.getElementById('hls-video');
     const hls = new Hls();
     let streamUrl = '';
 
     function playStream(url) {
       streamUrl = url;
+      standbyVideo.style.display = 'none'; 
+      video.style.display = 'block';     
+
       hls.detachMedia();
       hls.loadSource(url);
       hls.attachMedia(video);
+      video.play().catch(e => console.warn("Play error:", e));
     }
 
+ 
     let lastBuffered = 0;
     setInterval(() => {
       if (video.readyState < 2 || video.buffered.length === 0) return;
@@ -272,6 +288,7 @@
       lastBuffered = currentBuffered;
     }, 10000);
 
+ 
     fetch('data/live.json')
       .then(response => response.json())
       .then(channels => {
