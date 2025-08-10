@@ -83,7 +83,6 @@
       width: 100%;
     }
 
-
     @media (max-width: 768px) {
       .menu-toggle {
         display: block;
@@ -123,7 +122,7 @@
     .container {
       max-width: 1200px;
       margin: 20px auto;
-      padding: 60px 10px 0 10px;;
+      padding: 80px 10px 0 10px; /* padding-top diperbesar agar ada jarak header */
     }
 
     #video-container {
@@ -320,7 +319,8 @@
             const header = document.querySelector('header');
             const headerHeight = header.offsetHeight;
             const videoContainer = document.getElementById("video-container");
-            const y = videoContainer.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            const gap = 20; // jarak 20px di bawah header
+            const y = videoContainer.getBoundingClientRect().top + window.pageYOffset - headerHeight - gap;
 
             window.scrollTo({ top: y, behavior: "smooth" });
           });
